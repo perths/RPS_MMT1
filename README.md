@@ -1,2 +1,2 @@
 # CUVETTE_JS_MMT_1
-JavaScript Major Module Test | Stone Paper Scissor
+JavaScript Major Module Test | Rock Paper Scissor
