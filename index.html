@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style/style.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="./images/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./images/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./images/favicons/favicon-16x16.png">
+    <title>Rock Paper Scissor-MMT 1</title>
+</head>
+
+<body>
+    <!-- SCORE COUNTERS DIV  -->
+    <div class="parent-play-div">
+
+        <div class="score-div">
+
+            <div class="text-div">
+                <pre>
+rock
+paper
+scissors
+</pre>
+            </div>
+
+            <div class="score-counter-div">
+                <p>computer<br>score</p>
+                <span id="computer-score">6</span>
+            </div>
+
+            <div class="score-counter-div">
+                <p>your<br>score</p>
+                <span id="user-score">2</span>
+            </div>
+
+        </div>
+
+        <!-- PLAY DIV -->
+        <div id="play-board-div">
+
+            <div class="lines-div">
+                <div class="line" id="line-1"></div>
+                <div class="line" id="line-3"></div>
+                <div class="line" id="line-2"></div>
+            </div>
+
+            <div class="actions-div">
+                <div class="rock-div action" id="rock" onclick="computeGame('rock')">
+                    <img src="./images/rock.png" alt="Rock">
+                </div>
+
+                <div class="paper-div action" id="paper" onclick="computeGame('paper')">
+                    <img src="./images/paper.png" alt="Paper">
+                </div>
+                <div class="scissor-div action" id="scissor" onclick="computeGame('scissor')">
+                    <img src="./images/scissor.png" alt="Scissor">
+                </div>
+            </div>
+
+        </div>
+
+        <!-- RESULT DIV -->
+        <div id="result-parent-div">
+
+            <div class="focus-borders user-focus-border-1">
+                <div class="focus-borders user-focus-border-2">
+                    <div class="focus-borders user-focus-border-3">
+
+                        <div class="selection-div">
+                            <h3 class="selection-heading">You Picked</h3>
+                            <div class="result-img action user-result"></div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="result-display-div">
+                <p id="result-text-1"></p>
+                <p id="result-text-2">against computer</p>
+                <button class="filled-btn play-again" id="play-again-btn">play again</button>
+                <button class="filled-btn" id="replay-btn">replay</button>
+            </div>
+
+            <div class="focus-borders computer-focus-border-1">
+                <div class="focus-borders computer-focus-border-2">
+                    <div class="focus-borders computer-focus-border-3">
+
+                        <div class="selection-div">
+                            <h3 class="selection-heading">COMPUTER Picked</h3>
+                            <div class="result-img action computer-result"></div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- SIDE BUTTONS -->
+        <div class="side-buttons-div">
+            <button class="btn" id="rules-btn">rules</button>
+            <button class="btn" id="next-btn">next</button>
+        </div>
+
+        <!-- RULES -->
+        <div id="rules-div">
+            <div id="rules-close-div">
+                <svg width="23" height="31" viewBox="0 0 25 25" fill="none" version="1.1"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <line x1="2" y1="25" x2="25" y2="2" stroke="white" stroke-width="4" />
+                    <line x1="1" y1="1" x2="25" y2="25" stroke="white" stroke-width="4" />
+                </svg>
+            </div>
+            <h3>Game Rules</h3>
+            <ul class="rules-list">
+                <li>
+                    <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="8" height="8" fill="orange"></rect>
+                    </svg>
+                    Rock beats scissors, scissors beats paper, and paper beats rock.
+                </li>
+                <li>
+                    <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="8" height="8" fill="orange"></rect>
+                    </svg>
+                    Agree ahead of time whether you’ll count off “rock, paper, scissors,
+                    shoot” or just “rock, paper, scissors.”
+                </li>
+                <li>
+                    <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="8" height="8" fill="orange"></rect>
+                    </svg>
+                    Use rock, paper, scissors to settle minor decisions or simply play
+                    to pass the time
+                </li>
+                <li>
+                    <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="8" height="8" fill="orange"></rect>
+                    </svg>
+                    If both players lay down the same hand, each player lays down
+                    another hand
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+    <!-- VICTORY DIV -->
+    <div class="won-game-div">
+        <img src="./images/victory_stars.png" alt="Stars" id="stars">
+        <img src="./images/victory_trophy.png" alt="Trophy" id="trophy">
+        <h2 class="won-game-head">hurray!!</h2>
+        <h6 class="won-game-sub-head">you won the game</h6>
+        <button class="filled-btn" id="win-play-again-btn" onclick="playAgain()">play again</button>
+        <div class="side-buttons-div">
+            <button class="btn" id="rules-btn">rules</button>
+        </div>
+    </div>
+
+    <script src="./script/script.js"></script>
+</body>
+
+</html>

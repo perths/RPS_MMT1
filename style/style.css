@@ -1,0 +1,399 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
+  letter-spacing: 0.1vw;
+}
+
+body {
+  background-color: #99c542;
+}
+
+.parent-play-div {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+}
+
+.score-div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 5vh;
+  border: 0.2vw solid #ffffff;
+  border-radius: 0.5vw;
+  width: 60vw;
+}
+
+.text-div {
+  flex: 1;
+  color: #ffff;
+  font-size: 2rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  margin-left: 1.7%;
+}
+
+.score-counter-div {
+  background: #ffffff;
+  border-radius: 0.6vw;
+  width: 9vw;
+  padding: 1%;
+  text-align: center;
+  text-transform: uppercase;
+  margin: 1rem 0;
+  margin-right: 1rem;
+}
+
+.score-counter-div p {
+  color: #656565;
+  font-weight: 700;
+}
+
+.score-counter-div span {
+  color: #252525;
+  font-size: 3.5rem;
+  font-weight: 700;
+}
+
+#play-board-div {
+  display: grid;
+  place-items: center;
+  justify-items: center;
+  position: fixed;
+  top: 50%;
+}
+
+.line {
+  width: 262px;
+  border: 7px solid #000000A3;
+}
+
+#line-1 {
+  position: relative;
+}
+
+#line-2 {
+  transform: rotate(120deg);
+  position: relative;
+  left: 74px;
+  top: 82px;
+}
+
+#line-3 {
+  transform: rotate(60deg);
+  position: relative;
+  right: 54px;
+  top: 104px;
+}
+
+.actions-div {
+  position: relative;
+  right: 130%;
+}
+
+.action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 150px;
+  height: 150px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  filter: drop-shadow(-1px 1px 11px rgba(0, 0, 0, 0.35));
+}
+
+.action img {
+  width: 60px;
+}
+
+#rock,
+#paper,
+#scissor {
+  cursor: pointer;
+}
+
+.actions-div img:hover {
+  transform: scale(1.3);
+}
+
+#rock {
+  position: relative;
+  bottom: 110px;
+  left: 225px;
+}
+
+.rock-div {
+  border: 16px solid #0074b6;
+}
+
+#rock:hover {
+  border: 11px solid #0074b6;
+  transition: all 0.05s ease-in-out;
+}
+
+#scissor {
+  position: relative;
+  left: 345px;
+  bottom: 206px;
+}
+
+.scissor-div {
+  border: 16px solid #bd00ff;
+}
+
+#scissor:hover {
+  border: 11px solid #bd00ff;
+  transition: all 0.05s ease-in-out 0.01s;
+}
+
+#paper {
+  position: relative;
+  bottom: 260px;
+  left: 465px;
+}
+
+.paper-div {
+  border: 16px solid #ffa943;
+}
+
+#paper:hover {
+  border: 11px solid #ffa943;
+  transition: all 0.05s ease-in-out;
+}
+
+#result-parent-div {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-direction: row;
+  width: 60%;
+  margin-top: 2rem;
+  display: none;
+}
+
+.result-display-div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  font-weight: 800;
+  font-size: 18px;
+  line-height: 35px;
+  color: #ffffff;
+}
+
+#result-text-1 {
+  font-size: 40px;
+}
+
+#result-text-2 {
+  font-size: 20px;
+  text-transform: uppercase;
+}
+
+.focus-borders {
+  border-radius: 50%;
+}
+
+.win-focus-border-3 {
+  padding: 1.8rem;
+  background-color: #20a81e;
+}
+
+.win-focus-border-2 {
+  padding: 1.8rem;
+  background-color: #2c9d28;
+}
+
+.win-focus-border-1 {
+  padding: 1.8rem;
+  background: #60a943;
+  box-shadow: 0px 1px 60px rgba(0, 0, 0, 0.10);
+}
+
+.lose-focus-border-3 {
+  padding: 1.8rem;
+  background-color: #b12323;
+}
+
+.lose-focus-border-2 {
+  padding: 1.8rem;
+  background-color: #c72525;
+}
+
+.lose-focus-border-1 {
+  padding: 1.8rem;
+  background: #d14545;
+  box-shadow: 0px 1px 60px rgba(0, 0, 0, 0.10);
+}
+
+.selection-heading {
+  position: absolute;
+  color: #ffffff;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.selection-div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.side-buttons-div {
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  flex-direction: row;
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+}
+
+.btn {
+  background-color: transparent;
+  color: #ffff;
+  border: 2px solid #ffff;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 0.6rem 1.5rem;
+  border-radius: 8px;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: #ffff;
+  color: #6b6b6b;
+  transition: all 0.1s ease-in-out;
+}
+
+.filled-btn {
+  background-color: #ffffff;
+  color: #6b6b6b;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 6% 6%;
+  text-transform: uppercase;
+  cursor: pointer;
+  margin-top: 10%;
+}
+
+#win-play-again-btn {
+  font-size: 16px;
+  padding: 0.8rem 1.8rem;
+}
+
+.filled-btn:hover {
+  background-color: transparent;
+  color: #ffff;
+  border: 2px solid #ffff;
+  transition: all 0.2s ease-in-out;
+}
+
+#play-again-btn {
+  display: block;
+}
+
+#replay-btn {
+  padding: 0.5rem 1.8rem;
+  display: none;
+}
+
+#next-btn {
+  display: none;
+  margin-left: 0.6rem;
+}
+
+#rules-div {
+  display: none;
+  position: absolute;
+  right: 42px;
+  bottom: 82px;
+  width: 280px;
+  background-color: #023c25;
+  color: #ffffff;
+  border: 7px solid #ffffff;
+  border-radius: 13px;
+  padding: 1.2% 1%;
+  z-index: 1;
+}
+
+#rules-close-div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  right: -30px;
+  top: -30px;
+  background-color: #ff0000;
+  border: 5px solid #ffffff;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+#rules-div h3 {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.rules-list svg {
+  margin-right: 4px;
+  margin-bottom: 1px;
+}
+
+.rules-list li {
+  font-size: 0.8rem;
+  list-style: none;
+  text-align: justify;
+  margin-bottom: 5%;
+  letter-spacing: 0.05px;
+}
+
+.won-game-div {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: #8cc461;
+  color: #ffffff;
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  text-transform: uppercase;
+}
+
+.won-game-head {
+  font-weight: 600;
+  font-size: 90px;
+}
+
+.won-game-sub-head {
+  font-weight: 500;
+  font-size: 40px;
+}
+
+#stars {
+  position: absolute;
+  top: 40px;
+}
+
+#trophy {
+  margin-top: 5%;
+  margin-bottom: 2%;
+}
