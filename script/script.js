@@ -93,7 +93,7 @@ computerScore.innerHTML = score.computer;
 /** Mapping game outcome texts */
 const result = {
   win: 'YOU WIN',
-  lose: 'YOU LOST',
+  lose: 'YOU LOSE',
   tie: 'TIE UP',
 };
 
