@@ -1,7 +1,8 @@
 /**
- * @author Parth Surti
+ * @author Parth Surti (perthsurti at gmail.com)
  * @summary Script for Rock Paper Scissor game
  * 
+ * @description
  * This script is developed for a simple Rock Scissors game.
  * The game is 1 verus 1, where Player 1 is the User and Player 2 is the Computer.
  * Each player selects one object i.e. Rock or Paper or Scissor.
@@ -42,6 +43,9 @@ const replayBtn = document.getElementById('replay-btn');
 /** Play Game Div */
 const playBoard = document.getElementById('play-board-div');
 
+/** Error Display Div */
+const errorDiv = document.getElementById('error-div');
+
 /** Scores Div */
 const computerScore = document.getElementById('computer-score');
 const userScore = document.getElementById('user-score');
@@ -71,8 +75,6 @@ const closeRulesDiv = document.getElementById('rules-close-div');
 /** Game Won Div */
 const wonGameDiv = document.querySelector('.won-game-div');
 
-
-
 let score = {
   user: 0,
   computer: 0,
@@ -81,6 +83,7 @@ let score = {
 /** 
  * Check for score in Local Storage
  * Set score if score found in local storage
+ * rps -> rock paper scissor
  */
 if (localStorage.getItem('rpsScore')) {
   score = JSON.parse(localStorage.getItem('rpsScore'));
@@ -91,7 +94,7 @@ userScore.innerHTML = score.user;
 computerScore.innerHTML = score.computer;
 
 /** Mapping game outcome texts */
-const result = {
+const resultDisplayTextObj = {
   win: 'YOU WIN',
   lose: 'YOU LOSE',
   tie: 'TIE UP',
@@ -106,7 +109,7 @@ const playAgain = () => {
 }
 
 /**
- * @summary generates a random number between 0 to 2 and fetches element at position in the objects array
+ * @description generates a random number between 0 to 2 and fetches element at position in the objects array
  * @returns {String} rock OR paper OR scissor
  */
 const getComputerSelection = () => {
@@ -124,103 +127,111 @@ const createImage = (selection) => {
 }
 
 /**
- * @summary Clears the previous Results so that new Result can be rendered
+ * @description Clears the previous Results so that new Result can be rendered
  */
 const clearResultState = () => {
+  try {
+    resultParentDiv.style.marginTop = '4.5%';
 
-  resultParentDiv.style.marginTop = '4.5%';
+    selectionHeading.forEach((element) => element.style.top = '320px');
 
-  selectionHeading.forEach((element) => element.style.top = '320px');
+    userResult.classList.remove('rock-div');
+    userResult.classList.remove('paper-div');
+    userResult.classList.remove('scissor-div');
 
-  userResult.classList.remove('rock-div');
-  userResult.classList.remove('paper-div');
-  userResult.classList.remove('scissor-div');
+    computerResult.classList.remove('rock-div');
+    computerResult.classList.remove('paper-div');
+    computerResult.classList.remove('scissor-div');
 
-  computerResult.classList.remove('rock-div');
-  computerResult.classList.remove('paper-div');
-  computerResult.classList.remove('scissor-div');
-
-  playAgainBtn.style.display = 'none';
-  resultText2.style.display = 'none';
-  replayBtn.style.display = 'none';
-  nextBtn.style.display = 'none';
+    playAgainBtn.style.display = 'none';
+    resultText2.style.display = 'none';
+    replayBtn.style.display = 'none';
+    nextBtn.style.display = 'none';
+  } catch (error) {
+    console.error('Error in clearResultState()', error);
+    reloadGame();
+  }
 }
 
 /**
- * @summary Checks the object selection of both players and renders result screen accordingly
+ * @description Checks the object selection of both players and renders result screen accordingly
  * @param {String} userSelection rock OR paper OR scissor
  */
 const computeGame = (userSelection) => {
+  try {
+    clearResultState();
 
-  clearResultState();
+    const computerSelection = getComputerSelection();
 
-  const computerSelection = getComputerSelection();
+    let resultDisplayText;
+    let outcome = 0;
 
-  let resultDisplayText;
-  let outcome = 0;
+    // Tie up i.e. both have same object selected
+    if (userSelection === computerSelection) {
+      resultDisplayText = resultDisplayTextObj.tie;
 
-  // Tie up i.e. both have same object selected
-  if (userSelection === computerSelection) {
-    resultDisplayText = result.tie;
+      playAgainBtn.style.display = 'none';
+      replayBtn.style.display = 'block';
+      resultText2.style.display = 'none';
 
-    playAgainBtn.style.display = 'none';
-    replayBtn.style.display = 'block';
-    resultText2.style.display = 'none';
+      selectionHeading.forEach((element) => element.style.top = '280px');
+      resultParentDiv.style.marginTop = '8%';
 
-    selectionHeading.forEach((element) => element.style.top = '280px');
-    resultParentDiv.style.marginTop = '8%';
+      outcome = 1;
+      setFocus(outcome);
+    }
 
-    outcome = 1;
-    setFocus(outcome);
-  }
+    // Player 1 (User) Wins & Player 2 (Computer) Loses
+    else if (
+      (userSelection === 'rock' && computerSelection === 'scissor') ||
+      (userSelection === 'paper' && computerSelection === 'rock') ||
+      (userSelection === 'scissor' && computerSelection === 'paper')
+    ) {
+      resultDisplayText = resultDisplayTextObj.win;
 
-  // Player 1 (User) Wins & Player 2 (Computer) Loses
-  else if (
-    (userSelection === 'rock' && computerSelection === 'scissor') ||
-    (userSelection === 'paper' && computerSelection === 'rock') ||
-    (userSelection === 'scissor' && computerSelection === 'paper')
-  ) {
-    resultDisplayText = result.win;
+      playAgainBtn.style.display = 'block';
+      resultText2.style.display = 'block';
+      nextBtn.style.display = 'block';
 
-    playAgainBtn.style.display = 'block';
-    resultText2.style.display = 'block';
-    nextBtn.style.display = 'block';
+      outcome = 2;
+      setFocus(outcome);
+      score.user++;
+    }
 
-    outcome = 2;
-    setFocus(outcome);
-    score.user++;
-  }
+    // Player 1 (User) Loses & Player 2 (Computer) Wins
+    else {
+      resultDisplayText = resultDisplayTextObj.lose;
 
-  // Player 1 (User) Loses & Player 2 (Computer) Wins
-  else {
-    resultDisplayText = result.lose;
+      playAgainBtn.style.display = 'block';
+      resultText2.style.display = 'block';
 
-    playAgainBtn.style.display = 'block';
-    resultText2.style.display = 'block';
+      outcome = 3;
+      setFocus(outcome);
+      score.computer++;
+    }
 
-    outcome = 3;
-    setFocus(outcome);
-    score.computer++;
-  }
+    // Preparing to show Result State
+    playBoard.style.display = 'none';
+    resultParentDiv.style.display = 'flex';
 
-  // Preparing to show Result State
-  playBoard.style.display = 'none';
-  resultParentDiv.style.display = 'flex';
+    userResult.classList.add(`${userSelection}-div`);
+    computerResult.classList.add(`${computerSelection}-div`);
+    userResult.innerHTML = createImage(userSelection);
+    computerResult.innerHTML = createImage(computerSelection);
+    resultText.innerHTML = resultDisplayText;
 
-  userResult.classList.add(`${userSelection}-div`);
-  computerResult.classList.add(`${computerSelection}-div`);
-  userResult.innerHTML = createImage(userSelection);
-  computerResult.innerHTML = createImage(computerSelection);
-  resultText.innerHTML = resultDisplayText;
+    // Check if the outcome is 1 i.e. tie
+    if (outcome != 1) {
+      // Update score counters
+      userScore.innerHTML = score.user;
+      computerScore.innerHTML = score.computer;
 
-  // Check if the outcome is 1 i.e. tie
-  if (outcome != 1) {
-    // Update score counters
-    userScore.innerHTML = score.user;
-    computerScore.innerHTML = score.computer;
-
-    // Save score in browser local storage
-    localStorage.setItem('rpsScore', JSON.stringify(score));
+      // Save score in browser local storage
+      localStorage.setItem('rpsScore', JSON.stringify(score));
+    }
+  } catch (error) {
+    console.error('Error occured in computeGame', error);
+    reloadGame();
   }
 };
 
@@ -230,47 +241,61 @@ const computeGame = (userSelection) => {
  * @param {Number} outcome 1 OR 2 OR 3 
  */
 const setFocus = (outcome) => {
-  switch (outcome) {
-    // Tie
-    case 1: {
-      for (let i = 0, counter = 1; i < userFocusBorders.length; i++, counter++) {
+  try {
+    switch (outcome) {
+      // Tie
+      case 1: {
+        for (let i = 0, counter = 1; i < userFocusBorders.length; i++, counter++) {
 
-        userFocusBorders[i].classList.remove(`win-focus-border-${counter}`);
-        userFocusBorders[i].classList.remove(`lose-focus-border-${counter}`);
+          userFocusBorders[i].classList.remove(`win-focus-border-${counter}`);
+          userFocusBorders[i].classList.remove(`lose-focus-border-${counter}`);
 
-        computerFocusBorders[i].classList.remove(`win-focus-border-${counter}`);
-        computerFocusBorders[i].classList.remove(`lose-focus-border-${counter}`);
+          computerFocusBorders[i].classList.remove(`win-focus-border-${counter}`);
+          computerFocusBorders[i].classList.remove(`lose-focus-border-${counter}`);
+        }
+        break;
       }
-      break;
-    }
-    // Player 1 (User) Wins & Player 2 (Computer) Loses
-    case 2: {
-      for (let i = 0, counter = 1; i < userFocusBorders.length; i++, counter++) {
+      // Player 1 (User) Wins & Player 2 (Computer) Loses
+      case 2: {
+        for (let i = 0, counter = 1; i < userFocusBorders.length; i++, counter++) {
 
-        userFocusBorders[i].classList.remove(`lose-focus-border-${counter}`);
-        userFocusBorders[i].classList.add(`win-focus-border-${counter}`);
+          userFocusBorders[i].classList.remove(`lose-focus-border-${counter}`);
+          userFocusBorders[i].classList.add(`win-focus-border-${counter}`);
 
-        computerFocusBorders[i].classList.remove(`win-focus-border-${counter}`);
-        computerFocusBorders[i].classList.add(`lose-focus-border-${counter}`);
+          computerFocusBorders[i].classList.remove(`win-focus-border-${counter}`);
+          computerFocusBorders[i].classList.add(`lose-focus-border-${counter}`);
+        }
+        break;
       }
-      break;
-    }
-    // Player 1 (User) Loses & Player 2 (Computer) Wins
-    case 3: {
-      for (let i = 0, counter = 1; i < userFocusBorders.length; i++, counter++) {
+      // Player 1 (User) Loses & Player 2 (Computer) Wins
+      case 3: {
+        for (let i = 0, counter = 1; i < userFocusBorders.length; i++, counter++) {
 
-        userFocusBorders[i].classList.remove(`win-focus-border-${counter}`);
-        userFocusBorders[i].classList.add(`lose-focus-border-${counter}`);
+          userFocusBorders[i].classList.remove(`win-focus-border-${counter}`);
+          userFocusBorders[i].classList.add(`lose-focus-border-${counter}`);
 
-        computerFocusBorders[i].classList.remove(`lose-focus-border-${counter}`);
-        computerFocusBorders[i].classList.add(`win-focus-border-${counter}`);
+          computerFocusBorders[i].classList.remove(`lose-focus-border-${counter}`);
+          computerFocusBorders[i].classList.add(`win-focus-border-${counter}`);
+        }
+        break;
       }
-      break;
+      // This will never be the case
+      default:
+        break;
     }
-    // This will never be the case
-    default:
-      break;
+  } catch (error) {
+    console.error('Error in setFocus()', error);
+    reloadGame();
   }
+}
+
+/**
+ * @description Displays a Error message as alert and reloads the page/game after a delay of 3 seconds
+ */
+const reloadGame = () => {
+  //Reload page to soft restart game and elements
+  errorDiv.style.display = 'block';
+  setTimeout(() => { location.reload(); }, 3000);
 }
 
 /**
